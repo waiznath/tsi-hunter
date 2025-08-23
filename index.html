@@ -348,10 +348,12 @@
     setResult('Upload Excel file(s) to begin.');
   }
 
-  // ✅ Auto-focus on load if possible
-  window.onload = () => {
-    if (!toteInput.disabled) toteInput.focus();
-  };
+  // ✅ Reset everything and autofocus on page load
+window.onload = () => {
+  resetAll();            // Clear all data and UI
+  if (!toteInput.disabled) toteInput.focus();  // Focus input if enabled
+};
+
 
   // ✅ Refocus input when user types anywhere
   document.addEventListener('keydown', (e) => {
@@ -368,3 +370,4 @@
   <audio id="scanSound" src="https://www.soundjay.com/buttons/sounds/beep-02.mp3" preload="auto"></audio>
 </body>
 </html>
+
