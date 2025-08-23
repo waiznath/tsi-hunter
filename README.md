@@ -34,6 +34,12 @@ Upload your files, scan or type tote IDs, and keep track of which totes have bee
 
 ---
 
+## How to run online
+
+1. Open this link "https://waiznath.github.io/tsi-hunter/" in your browser
+2. Start uploading files and scanning totes!
+
+---
 
 ## How to run locally
 
