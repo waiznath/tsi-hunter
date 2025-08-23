@@ -34,11 +34,6 @@ Upload your files, scan or type tote IDs, and keep track of which totes have bee
 
 ---
 
-## Dependencies
-
-- [SheetJS (xlsx)](https://github.com/SheetJS/sheetjs) for reading Excel and CSV files.
-
----
 
 ## How to run locally
 
