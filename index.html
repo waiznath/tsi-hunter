@@ -336,17 +336,19 @@
   }
 
   function resetAll() {
-    toteIDs.clear();
-    foundTotes.clear();
-    foundCount = 0;
-    toteInput.value = '';
-    toteInput.disabled = true;
-    exportButton.disabled = true;
-    stats.style.display = 'none';
-    progressBarContainer.style.display = 'none';
-    foundTotesList.style.display = 'none';
-    setResult('Upload Excel file(s) to begin.');
-  }
+  toteIDs.clear();
+  foundTotes.clear();
+  foundCount = 0;
+  toteInput.value = '';
+  toteInput.disabled = true;
+  exportButton.disabled = true;
+  stats.style.display = 'none';
+  progressBarContainer.style.display = 'none';
+  foundTotesList.style.display = 'none';
+  fileInput.value = '';   // <-- Add this line to clear selected files
+  setResult('Upload Excel file(s) to begin.');
+}
+
 
   // ✅ Reset everything and autofocus on page load
 window.onload = () => {
@@ -370,4 +372,5 @@ window.onload = () => {
   <audio id="scanSound" src="https://www.soundjay.com/buttons/sounds/beep-02.mp3" preload="auto"></audio>
 </body>
 </html>
+
 
