@@ -345,7 +345,7 @@
   stats.style.display = 'none';
   progressBarContainer.style.display = 'none';
   foundTotesList.style.display = 'none';
-  fileInput.value = '';   // <-- Add this line to clear selected files
+  form.reset();
   setResult('Upload Excel file(s) to begin.');
 }
 
@@ -372,5 +372,6 @@ window.onload = () => {
   <audio id="scanSound" src="https://www.soundjay.com/buttons/sounds/beep-02.mp3" preload="auto"></audio>
 </body>
 </html>
+
 
 
