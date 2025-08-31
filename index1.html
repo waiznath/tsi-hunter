@@ -5,30 +5,139 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TSI Hunter</title>
   <style>
-    @keyframes fadeInSlide { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity: 1; transform: translateY(0);} }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8, #d9e2ec); margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-    .container { background: white; padding: 2.5rem; border-radius: 1.25rem; box-shadow: 0 12px 30px rgba(0,0,0,0.1); width: 90%; max-width: 520px; text-align: center; animation: fadeInSlide 0.8s ease forwards; }
-    h1 { margin-bottom: 1.5rem; color: #1f2937; animation: fadeInSlide 1s ease forwards; }
-    input[type="file"], input[type="text"], button { width: 100%; padding: 0.6rem; margin-bottom: 1rem; border-radius: 0.5rem; border: 1px solid #ccc; background: #f9fafb; font-size: 1rem; box-sizing: border-box; transition: box-shadow 0.3s ease, transform 0.2s ease; }
-    input[type="text"]:focus { outline: none; border-color: #3b82f6; background: white; box-shadow: 0 0 8px #3b82f6; transform: scale(1.02); }
-    button { background: #3b82f6; color: white; font-weight: 700; cursor: pointer; transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; border: none; }
-    button:disabled { background: #a5b4fc; cursor: not-allowed; }
-    button:hover:not(:disabled) { background: #2563eb; transform: scale(1.05); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5); }
-    .result { min-height: 2.2rem; font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem; opacity: 0; animation: fadeInSlide 0.6s ease forwards; transition: opacity 0.4s ease; }
-    .found { color: #16a34a; }
-    .not-found { color: #dc2626; }
-    .stats { display: flex; justify-content: space-around; margin-bottom: 1rem; font-weight: 600; color: #374151; flex-wrap: wrap; gap: 0.7rem; }
-    .stats > div { min-width: 110px; }
-    .progress-bar-container { background: #e0e7ff; border-radius: 0.75rem; height: 1.2rem; overflow: hidden; margin-bottom: 1.5rem; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); display:none; }
-    .progress-bar { height: 100%; background: #3b82f6; width: 0%; transition: width 0.5s ease; }
-    #foundTotesList { max-height: 150px; overflow-y: auto; border: 1px solid #ccc; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 1rem; text-align: left; display: none; font-size: 0.95rem; background: #f9fafb; user-select: none; }
-    footer { font-size: 0.9rem; color: #6b7280; opacity: 0.8; user-select: none; margin-top: 1.5rem; }
+    @keyframes fadeInSlide {
+      0% {opacity: 0; transform: translateY(20px);}
+      100% {opacity: 1; transform: translateY(0);}
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      margin: 0; padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 520px;
+      text-align: center;
+      animation: fadeInSlide 0.8s ease forwards;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+      animation: fadeInSlide 1s ease forwards;
+    }
+    input[type="file"], input[type="text"], button {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      background: #f9fafb;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 8px #3b82f6;
+      transform: scale(1.02);
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      border: none;
+    }
+    button:disabled {
+      background: #a5b4fc;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #2563eb;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+    }
+    .result {
+      min-height: 2.2rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInSlide 0.6s ease forwards;
+      transition: opacity 0.4s ease;
+    }
+    .found {
+      color: #16a34a;
+    }
+    .not-found {
+      color: #dc2626;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #374151;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+    .stats > div {
+      min-width: 110px;
+    }
+    .progress-bar-container {
+      background: #e0e7ff;
+      border-radius: 0.75rem;
+      height: 1.2rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .progress-bar {
+      height: 100%;
+      background: #3b82f6;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    /* Scrollable found totes container */
+    #foundTotesList {
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      text-align: left;
+      display: none;
+      font-size: 0.95rem;
+      background: #f9fafb;
+      user-select: none;
+    }
+    footer {
+      font-size: 0.9rem;
+      color: #6b7280;
+      opacity: 0.8;
+      user-select: none;
+      margin-top: 1.5rem;
+    }
   </style>
 </head>
+
 <body oncontextmenu="return false">
   <div class="container">
     <h1>TSI Hunter</h1>
 
+    <!-- Allow multiple files upload -->
     <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" multiple />
     <input type="text" id="toteInput" placeholder="Scan or enter tote ID..." disabled autocomplete="off" />
 
@@ -38,29 +147,28 @@
       <div>Remaining: <span id="remainingTotes">0</span></div>
     </div>
 
-    <div class="progress-bar-container" id="progressBarContainer">
+    <div class="progress-bar-container" style="display:none;">
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <!-- Scrollable Found Totes List -->
     <div id="foundTotesList"></div>
 
     <button id="exportButton" disabled>Export Found Totes</button>
     <div class="result" id="resultDisplay">Upload Excel file(s) to begin.</div>
 
-    <footer>Made by Rozimnic • Edited by Waiznath</footer>
+    <footer>Made by Rozimnic Edited by Waiznath</footer>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
+  <!-- App Logic -->
   <script>
-  // State
-  let toteIDs = new Set();               // remaining (not yet found)
-  let normalizedMap = new Map();         // lowercased -> original
+  let toteIDs = new Set();
   let foundTotes = new Set();
   let foundCount = 0;
   let scanTimeout;
 
-  // UI refs
   const fileInput = document.getElementById('fileInput');
   const toteInput = document.getElementById('toteInput');
   const exportButton = document.getElementById('exportButton');
@@ -70,113 +178,122 @@
   const foundTotesSpan = document.getElementById('foundTotes');
   const remainingTotesSpan = document.getElementById('remainingTotes');
   const progressBar = document.getElementById('progressBar');
-  const progressBarContainer = document.getElementById('progressBarContainer');
+  const progressBarContainer = progressBar.parentElement;
   const foundTotesList = document.getElementById('foundTotesList');
-  const audio = new Audio('https://www.soundjay.com/buttons/sounds/beep-02.mp3');
 
   fileInput.addEventListener('change', handleFile);
   toteInput.addEventListener('input', handleScan);
   exportButton.addEventListener('click', exportFoundTotes);
 
-  async function handleFile(event) {
-    const files = Array.from(event.target.files || []);
+  function handleFile(event) {
+    const files = event.target.files;
     if (!files.length) return resetAll();
 
-    // reset collections
     toteIDs.clear();
-    normalizedMap.clear();
     foundTotes.clear();
     foundCount = 0;
 
-    try {
-      // Parse every file and collect any non-empty cell value as a tote id
-      await Promise.all(files.map(file => new Promise((resolve, reject) => {
+    // process all files and combine totes
+    function processFile(file) {
+      return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = function(e) {
           try {
             const data = new Uint8Array(e.target.result);
-            const wb = XLSX.read(data, { type: 'array' });
-            // First sheet only per file (common case); adjust if you want all sheets
-            const sheetName = wb.SheetNames[0];
-            const ws = wb.Sheets[sheetName];
-            const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
-            rows.forEach(row => row.forEach(cell => {
-              if (cell === null || cell === undefined) return;
-              const id = String(cell).trim();
-              if (!id) return;
-              if (!normalizedMap.has(id.toLowerCase())) {
-                normalizedMap.set(id.toLowerCase(), id);
-                toteIDs.add(id);
-              }
-            }));
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            json.forEach(row => {
+              row.forEach(cell => {
+                if (cell) toteIDs.add(cell.toString().trim());
+              });
+            });
+
             resolve();
-          } catch (err) { reject(err); }
+          } catch (error) {
+            reject(error);
+          }
         };
         reader.onerror = () => reject(reader.error);
         reader.readAsArrayBuffer(file);
-      })));
-
-      if (toteIDs.size === 0) {
-        setResult('No totes found in uploaded files.', false);
-        toteInput.disabled = true;
-        exportButton.disabled = true;
-        stats.style.display = 'none';
-        progressBarContainer.style.display = 'none';
-        foundTotesList.style.display = 'none';
-        return;
-      }
-
-      toteInput.disabled = false;
-      exportButton.disabled = false;
-      stats.style.display = 'flex';
-      progressBarContainer.style.display = 'block';
-      foundTotesList.style.display = 'none';
-
-      updateStats();
-      updateFoundTotesList();
-      setResult(`Loaded totes from ${files.length} file(s). Total ${toteIDs.size} tote IDs to scan.`);
-      toteInput.focus();
-    } catch (error) {
-      setResult('Error reading files: ' + error.message, false);
-      resetAll();
+      });
     }
+
+    Promise.all(Array.from(files).map(processFile))
+      .then(() => {
+        if (toteIDs.size === 0) {
+          setResult('No totes found in uploaded files.', false);
+          toteInput.disabled = true;
+          exportButton.disabled = true;
+          stats.style.display = 'none';
+          progressBarContainer.style.display = 'none';
+          foundTotesList.style.display = 'none';
+          return;
+        }
+
+        toteInput.disabled = false;
+        exportButton.disabled = false;
+        stats.style.display = 'flex';
+        progressBarContainer.style.display = 'block';
+        foundTotesList.style.display = 'none';
+
+        updateStats();
+        updateFoundTotesList();
+        setResult(`Loaded totes from ${files.length} file(s). Total ${toteIDs.size} tote IDs to scan.`);
+        toteInput.focus();
+      })
+      .catch(error => {
+        setResult('Error reading files: ' + error.message, false);
+        resetAll();
+      });
   }
 
   function handleScan(e) {
     clearTimeout(scanTimeout);
     scanTimeout = setTimeout(() => {
-      const scannedRaw = e.target.value.trim();
-      if (scannedRaw === '') return;
+      const scanned = e.target.value.trim();
+      if (scanned === '') return;
 
-      const scannedKey = scannedRaw.toLowerCase();
+      const audio = document.getElementById("scanSound");
 
-      if (foundTotes.has(scannedRaw) || foundTotes.has(normalizedMap.get(scannedKey))) {
-        playBeep();
-        setResult(`Tote ${normalizedMap.get(scannedKey) || scannedRaw} already scanned!`, true);
-        updateFoundTotesList(normalizedMap.get(scannedKey) || scannedRaw);
-      } else if (normalizedMap.has(scannedKey)) {
-        const original = normalizedMap.get(scannedKey);
-        foundCount++;
-        foundTotes.add(original);
-        toteIDs.delete(original);
-        normalizedMap.delete(scannedKey);
-        playBeep();
-        setResult(`Tote ${original} please stow this tote asap! (${foundCount}/${foundCount + toteIDs.size})`, true);
-        updateStats();
-        updateFoundTotesList(original);
+      if (foundTotes.has(scanned)) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play();
+        setResult(`Tote ${scanned} already scanned!`, true);
+        updateFoundTotesList(scanned);  // Highlight again if re-scanned
       } else {
-        setResult(`Tote ${scannedRaw} not on the list!`, false);
+        // Case-insensitive match
+        const matchedTote = Array.from(toteIDs).find(tote => tote.toLowerCase() === scanned.toLowerCase());
+
+        if (matchedTote) {
+          foundCount++;
+          foundTotes.add(matchedTote);
+          toteIDs.delete(matchedTote);
+          audio.pause();
+          audio.currentTime = 0;
+          audio.play();
+
+          setResult(`Tote ${matchedTote} please stow this tote asap! (${foundCount}/${foundCount + toteIDs.size})`, true);
+          updateStats();
+          updateFoundTotesList(matchedTote);
+        } else {
+          setResult(`Tote ${scanned} not on the list!`, false);
+        }
       }
       e.target.value = '';
       e.target.focus();
-    }, 200); // light debounce for scanner bursts
+    }, 250);
   }
 
   function updateStats() {
-    const total = foundCount + toteIDs.size; // total remains dynamic as we remove found totes
+    const total = foundCount + toteIDs.size;
     totalTotesSpan.textContent = total;
     foundTotesSpan.textContent = foundCount;
     remainingTotesSpan.textContent = toteIDs.size;
+
     const progressPercent = total === 0 ? 0 : (foundCount / total) * 100;
     progressBar.style.width = progressPercent + '%';
   }
@@ -185,66 +302,77 @@
     if (foundTotes.size === 0) {
       foundTotesList.style.display = 'none';
       foundTotesList.innerHTML = '';
-      return;
+    } else {
+      foundTotesList.style.display = 'block';
+      const items = Array.from(foundTotes)
+        .sort((a, b) => a.localeCompare(b))
+        .map(id => `<div${id === lastScanned ? ' style="font-weight:bold;color:#2563eb;"' : ''}>• ${id}</div>`)
+        .join('');
+      foundTotesList.innerHTML = items;
     }
-    foundTotesList.style.display = 'block';
-    const items = Array.from(foundTotes)
-      .sort((a, b) => a.localeCompare(b))
-      .map(id => `<div${id === lastScanned ? ' style="font-weight:bold;color:#2563eb;"' : ''}>• ${id}</div>`) 
-      .join('');
-    foundTotesList.innerHTML = items;
   }
 
   function exportFoundTotes() {
     if (foundTotes.size === 0) return;
-    const now = new Date();
-    const ts = now.toISOString().replace(/[:T]/g, '-').slice(0,19);
+
     const data = Array.from(foundTotes).map(id => [id]);
-    const ws = XLSX.utils.aoa_to_sheet([[`Found Totes (${foundTotes.size})`], ['Tote ID'], ...data]);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'FoundTotes');
-    XLSX.writeFile(wb, `Found_Totes_List_${ts}.xlsx`);
+    const worksheet = XLSX.utils.aoa_to_sheet([['Found Totes'], ...data]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'FoundTotes');
+
+    XLSX.writeFile(workbook, 'Found_Totes_List.xlsx');
   }
 
   function setResult(message, found = null) {
     resultDisplay.style.opacity = 0;
     setTimeout(() => {
-      resultDisplay.innerHTML = found === null ? message : (found ? `<span class="found">${message}</span>` : `<span class="not-found">${message}</span>`);
+      resultDisplay.innerHTML = found === null
+        ? message
+        : found
+          ? `<span class="found">${message}</span>`
+          : `<span class="not-found">${message}</span>`;
       resultDisplay.style.opacity = 1;
-    }, 200);
+    }, 300);
   }
 
   function resetAll() {
-    toteIDs.clear();
-    normalizedMap.clear();
-    foundTotes.clear();
-    foundCount = 0;
-    toteInput.value = '';
-    fileInput.value = '';
-    toteInput.disabled = true;
-    exportButton.disabled = true;
-    stats.style.display = 'none';
-    progressBarContainer.style.display = 'none';
-    progressBar.style.width = '0%';
-    foundTotesList.style.display = 'none';
-    foundTotesList.innerHTML = '';
-    setResult('Upload Excel file(s) to begin.');
-  }
+  toteIDs.clear();
+  foundTotes.clear();
+  foundCount = 0;
+  toteInput.value = '';
+  toteInput.disabled = true;
+  exportButton.disabled = true;
+  stats.style.display = 'none';
+  progressBarContainer.style.display = 'none';
+  foundTotesList.style.display = 'none';
+  form.reset();
+  setResult('Upload Excel file(s) to begin.');
+}
 
-  function playBeep(){ try { audio.pause(); audio.currentTime = 0; audio.play(); } catch(_){} }
 
-  // Init
-  window.addEventListener('load', () => {
-    resetAll();
-    if (!toteInput.disabled) toteInput.focus();
-  });
+  // ✅ Reset everything and autofocus on page load
+window.onload = () => {
+  resetAll();            // Clear all data and UI
+  if (!toteInput.disabled) toteInput.focus();  // Focus input if enabled
+};
 
-  // Refocus input on any keystroke (except control keys)
+
+  // ✅ Refocus input when user types anywhere
   document.addEventListener('keydown', (e) => {
-    if (!toteInput.disabled && document.activeElement !== toteInput && !['Tab','F5','Control','Shift','Alt','Meta'].includes(e.key)) {
+    if (
+      !toteInput.disabled &&
+      document.activeElement !== toteInput &&
+      !['Tab', 'F5', 'Control', 'Shift', 'Alt'].includes(e.key)
+    ) {
       toteInput.focus();
     }
   });
   </script>
+
+  <audio id="scanSound" src="https://www.soundjay.com/buttons/sounds/beep-02.mp3" preload="auto"></audio>
 </body>
 </html>
+
+
+
+
