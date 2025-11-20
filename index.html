@@ -109,10 +109,11 @@ function updateFoundTotesList(lastScanned=null){if(!foundTotes.size){foundTotesL
 function exportFoundTotes(){if(!foundTotes.size)return; const now=new Date(); const ts=now.toISOString().replace(/[:T]/g,'-').slice(0,19); const data=Array.from(foundTotes).map(id=>[id]); const ws=XLSX.utils.aoa_to_sheet([[`Found Totes (${foundTotes.size})`],['Tote ID'],...data]); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'FoundTotes'); XLSX.writeFile(wb,`Found_Totes_List_${ts}.xlsx`);}
 function setResult(msg,found=null){resultDisplay.style.opacity=0; setTimeout(()=>{resultDisplay.innerHTML=found===null?msg:(found?`<span class="found">${msg}</span>`:`<span class="not-found">${msg}</span>`); resultDisplay.style.opacity=1;},200);}
 function resetAll(){toteIDs.clear(); normalizedMap.clear(); foundTotes.clear(); foundCount=0; scannedCount=0; toteInput.value=''; fileInput.value=''; toteInput.disabled=true; exportButton.disabled=true; stats.style.display='none'; progressBarContainer.style.display='none'; progressBar.style.width='0%'; foundTotesList.style.display='none'; foundTotesList.innerHTML=''; setResult('Upload Excel file(s) to begin.');}
-function playBeep(){try{audio.pause(); audio.currentTime=0; audio.play();}catch(_){}}
+function playBeep(){try{audio.volume = 1.0; audio.pause(); audio.currentTime=0; audio.play();}catch(_){}}
 window.addEventListener('load',()=>{resetAll(); if(!toteInput.disabled) toteInput.focus();});
 document.addEventListener('keydown',(e)=>{if(!toteInput.disabled && document.activeElement!==toteInput && !['Tab','F5','Control','Shift','Alt','Meta'].includes(e.key)) toteInput.focus();});
 </script>
 </body>
 </html>
+
 
